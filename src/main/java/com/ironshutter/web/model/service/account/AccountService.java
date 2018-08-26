@@ -1,4 +1,4 @@
-package com.ironshutter.web.model.service;
+package com.ironshutter.web.model.service.account;
 
 import com.ironshutter.web.model.jpa.entities.Account;
 import com.ironshutter.web.model.jpa.entities.AccountSetting;

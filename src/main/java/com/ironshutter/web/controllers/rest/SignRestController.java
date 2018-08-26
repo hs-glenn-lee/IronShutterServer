@@ -17,9 +17,9 @@ import com.ironshutter.web.controllers.rest.responses.GenericResponse;
 import com.ironshutter.web.exceptions.NotSignedInException;
 import com.ironshutter.web.model.jpa.entities.Account;
 import com.ironshutter.web.model.jpa.entities.AccountSetting;
-import com.ironshutter.web.model.service.AccountService;
-import com.ironshutter.web.model.service.Sign;
-import com.ironshutter.web.model.service.SignService;
+import com.ironshutter.web.model.service.account.AccountService;
+import com.ironshutter.web.model.service.sign.Sign;
+import com.ironshutter.web.model.service.sign.SignService;
 
 @RestController
 @RequestMapping(value="/api", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)

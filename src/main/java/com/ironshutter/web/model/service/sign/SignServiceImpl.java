@@ -1,4 +1,4 @@
-package com.ironshutter.web.model.service;
+package com.ironshutter.web.model.service.sign;
 
 import java.io.IOException;
 
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ironshutter.web.exceptions.NotSignedInException;
 import com.ironshutter.web.model.jpa.entities.Account;
 import com.ironshutter.web.model.jpa.entities.AccountSetting;
+import com.ironshutter.web.model.service.account.AccountService;
 
 @Service("signService")
 

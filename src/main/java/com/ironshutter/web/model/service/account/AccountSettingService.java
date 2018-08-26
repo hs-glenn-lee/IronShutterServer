@@ -1,4 +1,4 @@
-package com.ironshutter.web.model.service;
+package com.ironshutter.web.model.service.account;
 
 import java.io.IOException;
 
