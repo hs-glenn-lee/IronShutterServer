@@ -50,6 +50,7 @@ public class SignRestController {
 		if(account == null) {
 			return GenericResponse.getFail("일치하는 사용자 정보가 없습니다.");
 		}else {
+			setPrivatePropertyNull(account);
 			GenericResponse<Account> gr = new GenericResponse<Account>();
 			gr.setData(account);
 			return gr;
@@ -69,6 +70,13 @@ public class SignRestController {
 		req.getSession().invalidate();
 		GenericResponse<Object> res = new GenericResponse<Object>();
 		return res;
+	}
+	
+	private void setPrivatePropertyNull(Account account) {
+		if(account == null)
+			return;
+		
+		account.setPassword(null);
 	}
 
 }
