@@ -10,7 +10,7 @@ import com.ironshutter.web.model.jpa.entities.AccountSetting;
 
 public interface SignService {
 	
-	public boolean signup(Account account) throws IOException;
+	public Account signup(Account account) throws IOException;
 	
 	/**
 	 * if not valid username and password, this will return null

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ironshutter.web.controllers.rest.responses.GenericResponse;
 import com.ironshutter.web.exceptions.NotSignedInException;
 import com.ironshutter.web.model.jpa.entities.Account;
-import com.ironshutter.web.model.jpa.entities.AccountSetting;
 import com.ironshutter.web.model.service.account.AccountService;
 import com.ironshutter.web.model.service.sign.Sign;
 import com.ironshutter.web.model.service.sign.SignService;
@@ -30,23 +29,6 @@ public class SignRestController {
 	
 	@Autowired
 	AccountService accountSerivce;
-	
-	@RequestMapping(value="/sign-in", method=RequestMethod.POST)
-	public GenericResponse<?> signin(@RequestBody Account trying,
-													HttpServletRequest req) {
-		Account account = signService.signin(trying, req.getSession());
-		
-		if(account == null) {
-			return GenericResponse.getFail("일치하는 사용자 정보가 없습니다.");
-		}else {
-			GenericResponse<Account> gr = new GenericResponse<Account>();
-			gr.setStatus(GenericResponse.STATUS_SUCCESS); 
-			account.setPassword("");
-			gr.setData(account);
-			return gr;
-		}
-		
-	}
 	
 	@RequestMapping(value="/sign-up", method=RequestMethod.PUT)
 	public @ResponseBody GenericResponse<?> signup(@RequestBody Account account) throws IOException {
@@ -62,15 +44,19 @@ public class SignRestController {
 		return ret;
 	}
 	
-	@RequestMapping(value="/isUniqueNewEmail", method=RequestMethod.POST)
-	public HashMap<String, Boolean> isUniqueNewEmail(@RequestBody HashMap<String, Object> jsonMap) {
-		boolean isUniqueAndNew = accountSerivce.isUniqueNewUsername((String)jsonMap.get("email"));
-		HashMap<String, Boolean> ret = new HashMap<>();
-		ret.put("isUniqueNewEmail", isUniqueAndNew);
-		return ret;
+	@RequestMapping(value="/sign-in", method=RequestMethod.POST)
+	public GenericResponse<?> signin(@RequestBody Account trying, HttpServletRequest req) {
+		Account account = signService.signin(trying, req.getSession());
+		if(account == null) {
+			return GenericResponse.getFail("일치하는 사용자 정보가 없습니다.");
+		}else {
+			GenericResponse<Account> gr = new GenericResponse<Account>();
+			gr.setData(account);
+			return gr;
+		}
 	}
 
-	@RequestMapping(value="/getMyAccount", method=RequestMethod.GET)
+	@RequestMapping(value="/myAccount", method=RequestMethod.GET)
 	public Account getMyAccount(HttpServletRequest req) throws NotSignedInException {
 		Sign sign = signService.getSign(req.getSession());
 		Account mine = sign.getAccount();
@@ -78,7 +64,6 @@ public class SignRestController {
 		return mine;
 	}
 	
-	//temp
 	@RequestMapping(value="/sign-out", method=RequestMethod.POST)
 	public GenericResponse<?> signout(HttpServletRequest req) {
 		req.getSession().invalidate();

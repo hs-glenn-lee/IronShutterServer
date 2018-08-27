@@ -25,15 +25,14 @@ public class SignServiceImpl implements SignService{
 	
 	@Override
 	@Transactional
-	public boolean signup(Account account) throws IOException {
+	public Account signup(Account account) throws IOException {
 		Account newAccount = accountService.createNewAccount(account);
-		return true;
+		return newAccount;
 	}
 	
 	
 	@Override
 	public Account signin(Account account, HttpSession httpSession) {
-
 		Account authenicatedAccount = accountService.authenticate(account.getUsername(), account.getPassword());
 		
 		if(authenicatedAccount == null)
