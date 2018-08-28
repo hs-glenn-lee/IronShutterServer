@@ -26,25 +26,38 @@ public class SubscriptionChargeRatio implements Serializable{
 
 	@Id
 	@Column(name="unit_time")
-	private String unit_time;
+	private String unitTime;
 	
 	@Column(name="charge_per_unit")
-	private Long charge_per_unit;
+	private Long chargePerUnit;
 
 	public String getUnit_time() {
-		return unit_time;
+		return unitTime;
 	}
 
-	public void setUnit_time(String unit_time) {
-		this.unit_time = unit_time;
+	
+	public String getUnitTime() {
+		return unitTime;
 	}
 
-	public Long getCharge_per_unit() {
-		return charge_per_unit;
+	public void setUnitTime(String unitTime) {
+		this.unitTime = unitTime;
 	}
 
-	public void setCharge_per_unit(Long charge_per_unit) {
-		this.charge_per_unit = charge_per_unit;
+	public Long getChargePerUnit() {
+		return chargePerUnit;
 	}
 
+	public void setChargePerUnit(Long chargePerUnit) {
+		this.chargePerUnit = chargePerUnit;
+	}
+
+
+	public String toString() {
+		String ret = "{" +
+				"unitTime: " + unitTime + ", " +
+				"chargePerUnit:" + chargePerUnit + ", "+ 
+				"}";
+		return ret;
+	}
 }

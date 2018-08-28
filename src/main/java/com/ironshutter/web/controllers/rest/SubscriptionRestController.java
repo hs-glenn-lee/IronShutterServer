@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ironshutter.web.controllers.rest.responses.AppAuth;
 import com.ironshutter.web.exceptions.NotSignedInException;
 import com.ironshutter.web.model.jpa.entities.Account;
 import com.ironshutter.web.model.jpa.entities.Subscription;
@@ -44,12 +46,13 @@ public class SubscriptionRestController {
 		return requested;
 	}
 	
-	@RequestMapping(value="/subscription/authenticate", method=RequestMethod.POST)
-	public String appAuthenticate(HttpServletRequest req) {
-		
-		return null;
-	}
 	
+
+	@RequestMapping(value="/subscription/authenticate/{username}", method=RequestMethod.GET)
+	public AppAuth appAuthenticate(HttpServletRequest req, @PathVariable String username) {
+		AppAuth auth = subscriptionService.authenticateForApp(username);
+		return auth;
+	}
 	
 	
 	

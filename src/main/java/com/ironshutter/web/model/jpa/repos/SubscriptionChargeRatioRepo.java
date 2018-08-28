@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ironshutter.web.model.jpa.entities.SubscriptionChargeRatio;
 
-public interface SubscriptionChargeRatioInfo extends JpaRepository<SubscriptionChargeRatio, String>{
+public interface SubscriptionChargeRatioRepo extends JpaRepository<SubscriptionChargeRatio, String>{
 
 }

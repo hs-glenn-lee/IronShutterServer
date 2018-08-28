@@ -158,7 +158,20 @@ public class Subscription implements Serializable{
 	}
 
 	public String toString() {
-		return id;
+		String ret = "{ " +
+				"id: " + id + ", " +
+				"subscriber: " + subscriber.toString() + ", " +
+				"state: " + state + ", " +
+				"periodAmount: " + periodAmount.toString() + ", " +
+				"periodUnit: " + periodUnit + ", " +
+				"chargeAmount: " + chargeAmount + "," +
+				"requestedAt: " + requestedAt.toString() + ", " +
+				"canceledAt: " + canceledAt + ", " +
+				"permittedAt: " + permittedAt + ", " +
+				"activatedAt: " + activatedAt + ", " +
+				"expireAt: " + expireAt + 
+				"}";
+		return ret;
 	}
 
 }

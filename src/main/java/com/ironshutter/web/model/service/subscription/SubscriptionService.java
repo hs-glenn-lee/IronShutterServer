@@ -20,5 +20,5 @@ public interface SubscriptionService {
 	
 	public List<Subscription> getSubscriptionOverviewOf(Account account);
 	
-	public AppAuth authenticateForApp(Account account);
+	public AppAuth authenticateForApp(String username);
 }

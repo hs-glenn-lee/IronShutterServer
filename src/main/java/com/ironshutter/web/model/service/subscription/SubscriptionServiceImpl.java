@@ -1,11 +1,13 @@
 package com.ironshutter.web.model.service.subscription;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ import com.ironshutter.web.utils.UUIDUtil;
 
 @Service("subscriptionService")
 public class SubscriptionServiceImpl implements SubscriptionService{
+	
+	Logger logger = LoggerFactory.getLogger(SubscriptionService.class);
 	
 	@Autowired
 	SubscriptionRepo subscriptionRepo;
@@ -191,36 +195,64 @@ public class SubscriptionServiceImpl implements SubscriptionService{
 	
 	@Transactional
 	@Override
-	public AppAuth authenticateForApp(Account account) {
-		List<Subscription> activated = subscriptionRepo.findActivatedSubscriptionOf(account);
-		if(activated.isEmpty()) {
-			
-			//expireIfDateIsOver(activated);
-			
-			//TODO TODO
-			
-			
-			
-			List<Subscription> permitted = subscriptionRepo.findPermittedSubscriptionsOf(account);
-			if(!permitted.isEmpty()) {
-				Subscription activating = permitted.get(0);
-				this.activate(activating);
-				return new AppAuth(AppAuth.Result.ACTIVATE_NEW_SUBS);
-			}else {
-				
-				
+	public AppAuth authenticateForApp(String username) {
+		Account account = accountRepo.findByUsername(username);
+		if(account == null) { throw new IllegalStateException("해당 사용자를 찾을 수 없습니다."); }
+		
+		List<Subscription> importants = subscriptionRepo.findImportantSubscriptionsOf(account);
+		List<Subscription> activated = new ArrayList<Subscription>();
+		List<Subscription> permitted = new ArrayList<Subscription>();
+
+		for(Subscription sub : importants) {
+			switch(sub.getState()) {
+			case Subscription.State.ACTIVATED:
+				if(activated.size() > 1) { }
+				activated.add(sub);
+				break;
+			case Subscription.State.PERMITTED:
+				permitted.add(sub);
+				break;
 			}
 		}
 		
-		return null;
+		if(activated.size() > 1) { logger.error("Something wrong ..activated less than one."); }
+		if(permitted.size() > 1) { logger.error("Something wrong .. permitted must than one."); }
+		
+		AppAuth ret = null;
+		
+		expireIfSubcriptionIsOutOfDate(activated);
+		
+		if(activated.isEmpty()) {			
+			if(permitted.isEmpty()) {
+				return new AppAuth(AppAuth.Result.EXPIRED);
+			}else {
+				activatePermittedSubscription(permitted);
+				ret = new AppAuth(AppAuth.Result.ACTIVATE_NEW_SUBS);
+				ret.setActivated(activated.get(0));
+				return ret;
+			}
+		}else {
+			ret = new AppAuth(AppAuth.Result.AUTHORIZED);
+			ret.setActivated(activated.get(0));
+			return ret;
+		}
 	}
 	
-	private void expireIfDateIsOver(Subscription activated) {
+	private void expireIfSubcriptionIsOutOfDate(List<Subscription> activated) {
 		Date now = new Date();
-		Date expireAt = activated.getExpireAt();
-		if(now.after(expireAt)) {
-			this.expire(activated);
+		for(int i = 0; i < activated.size(); i++) {
+			Subscription sub = activated.get(i);
+			Date expireAt = sub.getExpireAt();
+			if(now.after(expireAt)) {
+				activated.remove(i);
+				this.expire(sub);
+			}
 		}
+	}
+	
+	private void activatePermittedSubscription(List<Subscription> permitted) {
+		Subscription nextAct = permitted.get(0);
+		this.activate(nextAct);
 	}
 
 }
