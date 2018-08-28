@@ -18,10 +18,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name="account_settings")
 public class AccountSetting implements Serializable{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6849223550312096800L;
+	private static final long serialVersionUID = 5847444087695974003L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

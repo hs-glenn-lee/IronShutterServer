@@ -17,14 +17,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 
 @Entity
 @Table(name="accounts")
 public class Account implements Serializable{
-	
-	private static final long serialVersionUID = 4615336338139177596L;
+
+	private static final long serialVersionUID = -4163953969858437768L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -44,11 +42,14 @@ public class Account implements Serializable{
 	@Column(name="update_timestamp")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatesTimestamp;
-
+	
+	/*entity mappings*/
 	
 	@OneToOne(mappedBy="account", fetch = FetchType.LAZY)
 	private AccountSetting accountSetting;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="subscriber")
+	private Set<Subscription> articles = new HashSet<Subscription>();
 
 	public Account(String username, String plainPassword) {}
 	public Account() {}
