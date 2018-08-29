@@ -9,13 +9,17 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ironshutter.web.controllers.rest.responses.AppAuth;
 import com.ironshutter.web.model.jpa.entities.Account;
 import com.ironshutter.web.model.jpa.entities.Subscription;
+import com.ironshutter.web.model.jpa.entities.SubscriptionChargeRatio;
 import com.ironshutter.web.model.jpa.repos.AccountRepo;
+import com.ironshutter.web.model.jpa.repos.SubscriptionChargeRatioRepo;
 import com.ironshutter.web.model.jpa.repos.SubscriptionRepo;
 import com.ironshutter.web.utils.UUIDUtil;
 
@@ -26,6 +30,9 @@ public class SubscriptionServiceImpl implements SubscriptionService{
 	
 	@Autowired
 	SubscriptionRepo subscriptionRepo;
+	
+	@Autowired
+	SubscriptionChargeRatioRepo subscriptionChargeRatioRepo;
 	
 	@Autowired
 	AccountRepo accountRepo;
@@ -39,9 +46,11 @@ public class SubscriptionServiceImpl implements SubscriptionService{
 		subscription.setId(UUIDUtil.newUUID());
 		Optional<Account> me = accountRepo.findById(subscription.getSubscriber().getId());
 		subscription.setSubscriber(me.get());
+		subscription.setState(Subscription.State.REQUESTED);
 		subscription.setRequestedAt(new Date());
+		calculateAndSetChargeAmount(subscription);
 		
-		subscriptionRepo.saveAndFlush(subscription);
+		subscriptionRepo.save(subscription);
 		return subscription;
 	}
 	private void validateRequestedSubscription(Subscription subs) {
@@ -67,6 +76,11 @@ public class SubscriptionServiceImpl implements SubscriptionService{
 			throw new IllegalStateException("예약 구독 신청은 1개만 가능합니다. 이미 활성화 대기중인 구독이 있습니다.");
 		}
 		
+	}
+	private void calculateAndSetChargeAmount(Subscription subs) {
+		SubscriptionChargeRatio ratio = subscriptionChargeRatioRepo.findByUnitTime(subs.getPeriodUnit());
+		Long chargeamount = subs.getPeriodAmount() * ratio.getChargePerUnit();
+		subs.setChargeAmount(chargeamount);
 	}
 	
 	@Transactional
@@ -226,9 +240,9 @@ public class SubscriptionServiceImpl implements SubscriptionService{
 			if(permitted.isEmpty()) {
 				return new AppAuth(AppAuth.Result.EXPIRED);
 			}else {
-				activatePermittedSubscription(permitted);
+				Subscription newActiavted = activatePermittedSubscription(permitted);
 				ret = new AppAuth(AppAuth.Result.ACTIVATE_NEW_SUBS);
-				ret.setActivated(activated.get(0));
+				ret.setActivated(newActiavted);
 				return ret;
 			}
 		}else {
@@ -250,9 +264,13 @@ public class SubscriptionServiceImpl implements SubscriptionService{
 		}
 	}
 	
-	private void activatePermittedSubscription(List<Subscription> permitted) {
+	private Subscription activatePermittedSubscription(List<Subscription> permitted) {
 		Subscription nextAct = permitted.get(0);
-		this.activate(nextAct);
+		return this.activate(nextAct);
+	}
+	@Override
+	public Page<Subscription> getRequestedSubscription(Pageable page) {
+		return subscriptionRepo.findRequestedSubscriptionByPage(page);
 	}
 
 }

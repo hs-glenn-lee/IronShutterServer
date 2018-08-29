@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ironshutter.web.controllers.rest.parameters.PageParameter;
 import com.ironshutter.web.controllers.rest.responses.AppAuth;
 import com.ironshutter.web.exceptions.NotSignedInException;
 import com.ironshutter.web.model.jpa.entities.Account;
 import com.ironshutter.web.model.jpa.entities.Subscription;
+import com.ironshutter.web.model.jpa.entities.SubscriptionChargeRatio;
 import com.ironshutter.web.model.service.sign.SignService;
+import com.ironshutter.web.model.service.subscription.SubscriptionChargeRatioService;
 import com.ironshutter.web.model.service.subscription.SubscriptionService;
 
 @RestController
@@ -30,6 +35,9 @@ public class SubscriptionRestController {
 	
 	@Autowired
 	SubscriptionService subscriptionService;
+	
+	@Autowired
+	SubscriptionChargeRatioService subscriptionChargeRatioService;
 	
 	@RequestMapping(value="/subscription/request", method=RequestMethod.POST)
 	public @ResponseBody Subscription requestSubscription(@RequestBody Subscription newSubscription, HttpServletRequest req) throws IOException, NotSignedInException {
@@ -46,16 +54,14 @@ public class SubscriptionRestController {
 		return requested;
 	}
 	
-	
-
 	@RequestMapping(value="/subscription/authenticate/{username}", method=RequestMethod.GET)
 	public AppAuth appAuthenticate(HttpServletRequest req, @PathVariable String username) {
 		AppAuth auth = subscriptionService.authenticateForApp(username);
 		return auth;
 	}
+
 	
-	
-	
+
 	@RequestMapping(value="/subscription/requested", method=RequestMethod.GET)
 	public @ResponseBody List<Subscription> getRequestedSubscriptions(HttpServletRequest req) throws IOException, NotSignedInException {
 		Account me = signService.getSign(req.getSession()).getAccount();
@@ -77,5 +83,19 @@ public class SubscriptionRestController {
 		return mines;
 	}
 	
+	@RequestMapping(value="/subscription/charge-ratio", method=RequestMethod.GET)
+	public @ResponseBody List<SubscriptionChargeRatio> getSubscriptionChargeRatio(HttpServletRequest req) throws IOException, NotSignedInException {
+		List<SubscriptionChargeRatio> ret = subscriptionChargeRatioService.getAll();
+		return ret;
+	}
+	
+	
+	// test
+	@RequestMapping(value="/subscription/manager/requested", method=RequestMethod.POST)
+	public @ResponseBody List<Subscription> getRequestedSubscriptionPage(@RequestBody PageParameter pageParameter, HttpServletRequest req) {
+		PageRequest prq = pageParameter.toPageRequest();
+		Page<Subscription> requested = subscriptionService.getRequestedSubscription(prq);
+		return requested.getContent();
+	}
 
 }

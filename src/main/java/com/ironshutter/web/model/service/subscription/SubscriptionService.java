@@ -3,6 +3,9 @@ package com.ironshutter.web.model.service.subscription;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.ironshutter.web.controllers.rest.responses.AppAuth;
 import com.ironshutter.web.model.jpa.entities.Account;
 import com.ironshutter.web.model.jpa.entities.Subscription;
@@ -21,4 +24,7 @@ public interface SubscriptionService {
 	public List<Subscription> getSubscriptionOverviewOf(Account account);
 	
 	public AppAuth authenticateForApp(String username);
+	
+	public Page<Subscription> getRequestedSubscription(Pageable page);
+	
 }
