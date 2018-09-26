@@ -229,20 +229,18 @@ public class SubscriptionServiceImpl implements SubscriptionService{
 			}
 		}
 		
-		if(activated.size() > 1) { logger.error("Something wrong ..activated less than one."); }
-		if(permitted.size() > 1) { logger.error("Something wrong .. permitted must than one."); }
+		if(activated.size() > 1) { logger.error("Something wrong ..activated must be one or zero."); }
+		if(permitted.size() > 1) { logger.error("Something wrong .. permitted must be one or zero."); }
 		
 		AppAuth ret = null;
 		
-		expireIfSubcriptionIsOutOfDate(activated);
+		expireIfSubcriptionIsOutOfDate(activated); // 배치로 처리하는게 맞는것 같다.
 		
 		if(activated.isEmpty()) {			
 			if(permitted.isEmpty()) {
 				return new AppAuth(AppAuth.Result.EXPIRED);
 			}else {
-				Subscription newActiavted = activatePermittedSubscription(permitted);
 				ret = new AppAuth(AppAuth.Result.ACTIVATE_NEW_SUBS);
-				ret.setActivated(newActiavted);
 				return ret;
 			}
 		}else {
