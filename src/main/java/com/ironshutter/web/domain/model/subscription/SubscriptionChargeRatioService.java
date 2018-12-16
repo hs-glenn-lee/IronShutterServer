@@ -1,4 +1,4 @@
-package com.ironshutter.web.domain.subscription;
+package com.ironshutter.web.domain.model.subscription;
 
 import java.util.List;
 

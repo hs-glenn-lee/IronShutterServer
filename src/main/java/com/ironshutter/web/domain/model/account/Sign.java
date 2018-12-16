@@ -1,4 +1,4 @@
-package com.ironshutter.web.domain.account.sign;
+package com.ironshutter.web.domain.model.account;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,8 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.ironshutter.web.domain.account.Account;
 
 @Entity
 @Table(name="signs")

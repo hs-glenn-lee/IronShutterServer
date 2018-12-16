@@ -1,8 +1,8 @@
-package com.ironshutter.web.domain.account.sign.support;
+package com.ironshutter.web.infrastructure.httpSession;
 
 import java.io.Serializable;
 
-import com.ironshutter.web.domain.account.Account;
+import com.ironshutter.web.domain.model.account.Account;
 
 /**
  * Sign instance is saved in session when user sign in.

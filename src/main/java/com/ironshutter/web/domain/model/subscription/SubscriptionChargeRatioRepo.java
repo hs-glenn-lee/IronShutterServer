@@ -1,4 +1,4 @@
-package com.ironshutter.web.domain.subscription;
+package com.ironshutter.web.domain.model.subscription;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,4 +1,4 @@
-package com.ironshutter.web.domain.account.sign.support;
+package com.ironshutter.web.domain.model.account;
 
 public class SignInSpecification {
 	private String username;

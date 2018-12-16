@@ -1,4 +1,4 @@
-package com.ironshutter.web.exceptions;
+package com.ironshutter.web.interfaces.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,4 +1,4 @@
-package com.ironshutter.web.controllers.rest.subscription;
+package com.ironshutter.web.interfaces.subscription.web;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ironshutter.web.controllers.rest.support.PageParameter;
-import com.ironshutter.web.domain.account.Account;
-import com.ironshutter.web.domain.account.sign.SignService;
-import com.ironshutter.web.domain.subscription.Subscription;
-import com.ironshutter.web.domain.subscription.SubscriptionChargeRatio;
-import com.ironshutter.web.domain.subscription.SubscriptionChargeRatioService;
-import com.ironshutter.web.domain.subscription.SubscriptionService;
-import com.ironshutter.web.exceptions.NotSignedInException;
+import com.ironshutter.web.domain.model.account.Account;
+import com.ironshutter.web.domain.model.subscription.Subscription;
+import com.ironshutter.web.domain.model.subscription.SubscriptionChargeRatio;
+import com.ironshutter.web.domain.model.subscription.SubscriptionChargeRatioService;
+import com.ironshutter.web.domain.model.subscription.SubscriptionService;
+import com.ironshutter.web.interfaces.exceptions.NotSignedInException;
+import com.ironshutter.web.interfaces.shared.PageParameter;
+import com.ironshutter.web.interfaces.sign.facade.SignServiceFacade;
 
 @RestController
 @RequestMapping(value="/api", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)

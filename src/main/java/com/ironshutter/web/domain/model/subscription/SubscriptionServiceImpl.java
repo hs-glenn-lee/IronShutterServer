@@ -1,4 +1,4 @@
-package com.ironshutter.web.domain.subscription;
+package com.ironshutter.web.domain.model.subscription;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,9 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ironshutter.web.controllers.rest.subscription.AppAuth;
-import com.ironshutter.web.domain.account.Account;
-import com.ironshutter.web.domain.account.AccountRepo;
+import com.ironshutter.web.domain.model.account.Account;
+import com.ironshutter.web.infrastructure.persistence.springDataJpa.AccountRepositorySpringJpa;
+import com.ironshutter.web.interfaces.shared.AppAuth;
 import com.ironshutter.web.support.UUIDUtil;
 
 public class SubscriptionServiceImpl{

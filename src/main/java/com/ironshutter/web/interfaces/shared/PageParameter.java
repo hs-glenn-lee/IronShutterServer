@@ -1,4 +1,4 @@
-package com.ironshutter.web.controllers.rest.support;
+package com.ironshutter.web.interfaces.shared;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

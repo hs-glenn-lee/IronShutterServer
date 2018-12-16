@@ -1,8 +1,8 @@
-package com.ironshutter.web.controllers.rest.subscription;
+package com.ironshutter.web.interfaces.shared;
 
 import java.io.Serializable;
 
-import com.ironshutter.web.domain.subscription.Subscription;
+import com.ironshutter.web.domain.model.subscription.Subscription;
 
 public class AppAuth implements Serializable{
 

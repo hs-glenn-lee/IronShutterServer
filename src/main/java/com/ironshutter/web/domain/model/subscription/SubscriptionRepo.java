@@ -1,4 +1,4 @@
-package com.ironshutter.web.domain.subscription;
+package com.ironshutter.web.domain.model.subscription;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.ironshutter.web.domain.account.Account;
+import com.ironshutter.web.domain.model.account.Account;
 
 public interface SubscriptionRepo extends JpaRepository<Subscription, String>{
 	

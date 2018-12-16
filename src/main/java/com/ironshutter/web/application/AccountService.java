@@ -1,5 +1,7 @@
-package com.ironshutter.web.domain.account;
+package com.ironshutter.web.application;
+
+import com.ironshutter.web.domain.model.account.Account;
 
 public interface AccountService {
-	public Account createNewAccount(Account newAccount);
+	public Account create(Account newAccount);
 }

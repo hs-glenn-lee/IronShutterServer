@@ -1,10 +1,12 @@
-package com.ironshutter.web.domain.account;
+package com.ironshutter.web.infrastructure.persistence.springDataJpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface AccountRepo extends JpaRepository<Account, Long>{
+import com.ironshutter.web.domain.model.account.Account;
+
+public interface AccountRepositorySpringJpa extends JpaRepository<Account, Long>{
 	
 	@Query("select account from Account account "
 			+ " join fetch account.user "

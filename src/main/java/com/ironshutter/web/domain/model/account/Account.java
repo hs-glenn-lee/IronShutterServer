@@ -1,4 +1,4 @@
-package com.ironshutter.web.domain.account;
+package com.ironshutter.web.domain.model.account;
 
 import java.io.Serializable;
 
@@ -12,10 +12,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
-
-import com.ironshutter.web.domain.account.sign.Sign;
-import com.ironshutter.web.domain.account.sign.support.SignUpSpecification;
-import com.ironshutter.web.domain.account.user.User;
 
 
 @Entity

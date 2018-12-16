@@ -1,4 +1,4 @@
-package com.ironshutter.web.controllers.spring.config;
+package com.ironshutter.web.config;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
-package com.ironshutter.web.domain.subscription;
+package com.ironshutter.web.domain.model.subscription;
 
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.ironshutter.web.controllers.rest.subscription.AppAuth;
-import com.ironshutter.web.domain.account.Account;
+import com.ironshutter.web.domain.model.account.Account;
+import com.ironshutter.web.interfaces.shared.AppAuth;
 
 public interface SubscriptionService {
 	public Subscription request(Subscription subscription);

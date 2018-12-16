@@ -1,4 +1,4 @@
-package com.ironshutter.web.domain.subscription;
+package com.ironshutter.web.domain.model.subscription;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.ironshutter.web.domain.account.Account;
+import com.ironshutter.web.domain.model.account.Account;
 
 
 @Entity

@@ -1,4 +1,4 @@
-package com.ironshutter.web.controllers.rest.sign;
+package com.ironshutter.web.interfaces.sign.web;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ironshutter.web.controllers.rest.support.GenericResponse;
-import com.ironshutter.web.domain.account.Account;
-import com.ironshutter.web.domain.account.AccountService;
-import com.ironshutter.web.domain.account.sign.SignService;
-import com.ironshutter.web.domain.account.sign.support.SignInSpecification;
-import com.ironshutter.web.domain.account.sign.support.SignUpSpecification;
-import com.ironshutter.web.domain.account.sign.support.SignedInValue;
-import com.ironshutter.web.exceptions.NotSignedInException;
+import com.ironshutter.web.application.AccountService;
+import com.ironshutter.web.domain.model.account.Account;
+import com.ironshutter.web.domain.model.account.SignInSpecification;
+import com.ironshutter.web.domain.model.account.SignUpSpecification;
+import com.ironshutter.web.infrastructure.httpSession.SignedInValue;
+import com.ironshutter.web.interfaces.exceptions.NotSignedInException;
+import com.ironshutter.web.interfaces.shared.GenericResponse;
+import com.ironshutter.web.interfaces.sign.facade.SignServiceFacade;
 
 @RestController
 @RequestMapping(value="/api", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class SignRestController {
 	
 	@Autowired
-	SignService signService;
+	SignServiceFacade signService;
 	
 	@RequestMapping(value="/sign-up", method=RequestMethod.PUT)
 	public @ResponseBody GenericResponse<?> signup(@RequestBody SignUpSpecification signUpForm) throws IOException {

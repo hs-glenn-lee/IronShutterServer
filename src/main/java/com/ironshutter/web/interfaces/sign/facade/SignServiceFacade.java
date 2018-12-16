@@ -1,16 +1,16 @@
-package com.ironshutter.web.domain.account.sign;
+package com.ironshutter.web.interfaces.sign.facade;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
-import com.ironshutter.web.domain.account.Account;
-import com.ironshutter.web.domain.account.sign.support.SignInSpecification;
-import com.ironshutter.web.domain.account.sign.support.SignUpSpecification;
-import com.ironshutter.web.domain.account.sign.support.SignedInValue;
-import com.ironshutter.web.exceptions.NotSignedInException;
+import com.ironshutter.web.domain.model.account.Account;
+import com.ironshutter.web.domain.model.account.SignInSpecification;
+import com.ironshutter.web.domain.model.account.SignUpSpecification;
+import com.ironshutter.web.infrastructure.httpSession.SignedInValue;
+import com.ironshutter.web.interfaces.exceptions.NotSignedInException;
 
-public interface SignService {
+public interface SignServiceFacade {
 	
 	public void signup(SignUpSpecification signUpSpecifiaction);
 	
