@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ironshutter.web.controllers.rest.support.GenericResponse;
 import com.ironshutter.web.domain.account.Account;
 import com.ironshutter.web.domain.account.AccountService;
-import com.ironshutter.web.domain.account.sign.SessionSign;
 import com.ironshutter.web.domain.account.sign.SignService;
-import com.ironshutter.web.domain.account.support.SignInForm;
-import com.ironshutter.web.domain.account.support.SignUpForm;
+import com.ironshutter.web.domain.account.sign.support.SignInSpecification;
+import com.ironshutter.web.domain.account.sign.support.SignUpSpecification;
+import com.ironshutter.web.domain.account.sign.support.SignedInValue;
 import com.ironshutter.web.exceptions.NotSignedInException;
 
 @RestController
@@ -30,7 +30,7 @@ public class SignRestController {
 	SignService signService;
 	
 	@RequestMapping(value="/sign-up", method=RequestMethod.PUT)
-	public @ResponseBody GenericResponse<?> signup(@RequestBody SignUpForm signUpForm) throws IOException {
+	public @ResponseBody GenericResponse<?> signup(@RequestBody SignUpSpecification signUpForm) throws IOException {
 		signService.signup(signUpForm);
 		return new GenericResponse<Object>();
 	}
@@ -44,7 +44,7 @@ public class SignRestController {
 	}
 	
 	@RequestMapping(value="/sign-in", method=RequestMethod.POST)
-	public GenericResponse<?> signin(@RequestBody SignInForm signInForm, HttpServletRequest req) {
+	public GenericResponse<?> signin(@RequestBody SignInSpecification signInForm, HttpServletRequest req) {
 		Account account = signService.signin(signInForm, req.getSession());
 		if(account == null) {
 			return GenericResponse.getFail("일치하는 사용자 정보가 없습니다.");
@@ -58,7 +58,7 @@ public class SignRestController {
 
 	@RequestMapping(value="/myAccount", method=RequestMethod.GET)
 	public Account getMyAccount(HttpServletRequest req) throws NotSignedInException {
-		SessionSign sign = signService.getSign(req.getSession());
+		SignedInValue sign = signService.getSign(req.getSession());
 		Account mine = sign.getAccount();
 
 		return mine;

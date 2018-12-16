@@ -1,4 +1,4 @@
-package com.ironshutter.web.domain.account.sign;
+package com.ironshutter.web.domain.account.sign.support;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import com.ironshutter.web.domain.account.Account;
 /**
  * Sign instance is saved in session when user sign in.
  * */
-public class SessionSign implements Serializable{
+public class SignedInValue implements Serializable{
 	
 	private static final long serialVersionUID = 6776507590445171404L;
 	

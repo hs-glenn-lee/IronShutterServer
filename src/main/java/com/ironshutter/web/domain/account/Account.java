@@ -1,9 +1,6 @@
 package com.ironshutter.web.domain.account;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,17 +8,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
 import com.ironshutter.web.domain.account.sign.Sign;
+import com.ironshutter.web.domain.account.sign.support.SignUpSpecification;
 import com.ironshutter.web.domain.account.user.User;
-import com.ironshutter.web.domain.subscription.Subscription;
 
 
 @Entity
@@ -46,6 +40,8 @@ public class Account implements Serializable{
 	private Sign sign;
 
 	public Account() {}
-
+	public Account(SignUpSpecification signUpForm) {
+		
+	}
 
 }
