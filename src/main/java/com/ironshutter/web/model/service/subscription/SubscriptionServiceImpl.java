@@ -21,7 +21,7 @@ import com.ironshutter.web.model.jpa.entities.SubscriptionChargeRatio;
 import com.ironshutter.web.model.jpa.repos.AccountRepo;
 import com.ironshutter.web.model.jpa.repos.SubscriptionChargeRatioRepo;
 import com.ironshutter.web.model.jpa.repos.SubscriptionRepo;
-import com.ironshutter.web.utils.UUIDUtil;
+import com.ironshutter.web.support.UUIDUtil;
 
 @Service("subscriptionService")
 public class SubscriptionServiceImpl implements SubscriptionService{
