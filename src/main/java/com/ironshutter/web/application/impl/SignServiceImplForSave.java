@@ -8,58 +8,19 @@ import org.springframework.stereotype.Service;
 
 import com.ironshutter.web.application.AccountService;
 import com.ironshutter.web.domain.model.account.Account;
-import com.ironshutter.web.domain.model.account.SignInSpecification;
-import com.ironshutter.web.domain.model.account.SignUpSpecification;
 import com.ironshutter.web.infrastructure.httpSession.SignedInValue;
 import com.ironshutter.web.interfaces.exceptions.NotSignedInException;
+import com.ironshutter.web.interfaces.sign.dto.SignInForm;
+import com.ironshutter.web.interfaces.sign.dto.SignUpForm;
 import com.ironshutter.web.interfaces.sign.facade.SignServiceFacade;
 
 @Service("signService")
-public class SignServiceImplForSave implements SignServiceFacade{
+public class SignServiceImplForSave {
 	
 	
 	private final static String SIGNED_IN_ATTRIBUTE_KEY = "SIGNED_IN_KEY";
 	
-	@Autowired
-	AccountService accountService;
 
-	@Override
-	@Transactional
-	public void signup(SignUpSpecification signUpSpecifiaction) {
-		/*Account newAccount = new Account(signUpSpecifiaction);
-		accountService.createNewAccount(newAccount);*/ // not ddd....
-	}
-
-	@Override
-	public boolean isOccupiedUsername(String username) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Account signin(SignInSpecification signInForm, HttpSession httpSession) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean signout(HttpSession session) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isSignedin(HttpSession httpSession) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public SignedInValue getSign(HttpSession session) throws NotSignedInException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
 /*
 	

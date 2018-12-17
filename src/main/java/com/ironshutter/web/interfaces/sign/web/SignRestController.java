@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ironshutter.web.application.AccountService;
 import com.ironshutter.web.domain.model.account.Account;
-import com.ironshutter.web.domain.model.account.SignInSpecification;
-import com.ironshutter.web.domain.model.account.SignUpSpecification;
 import com.ironshutter.web.infrastructure.httpSession.SignedInValue;
 import com.ironshutter.web.interfaces.exceptions.NotSignedInException;
 import com.ironshutter.web.interfaces.shared.GenericResponse;
+import com.ironshutter.web.interfaces.sign.dto.AccountDTO;
+import com.ironshutter.web.interfaces.sign.dto.SignInForm;
+import com.ironshutter.web.interfaces.sign.dto.SignUpForm;
 import com.ironshutter.web.interfaces.sign.facade.SignServiceFacade;
 
 @RestController
@@ -27,30 +27,29 @@ import com.ironshutter.web.interfaces.sign.facade.SignServiceFacade;
 public class SignRestController {
 	
 	@Autowired
-	SignServiceFacade signService;
+	SignServiceFacade signServiceFacade;
 	
 	@RequestMapping(value="/sign-up", method=RequestMethod.PUT)
-	public @ResponseBody GenericResponse<?> signup(@RequestBody SignUpSpecification signUpForm) throws IOException {
-		signService.signup(signUpForm);
+	public @ResponseBody GenericResponse<?> signup(@RequestBody SignUpForm signUpForm) throws IOException {
+		signServiceFacade.signup(signUpForm);
 		return new GenericResponse<Object>();
 	}
 	
 	@RequestMapping(value="/isOccupiedUsername", method=RequestMethod.POST)
 	public HashMap<String, Boolean> isUniqueUsername(@RequestBody HashMap<String, Object> jsonMap) {
-		boolean isOccupiedUsername = signService.isOccupiedUsername((String)jsonMap.get("username"));
+		boolean isOccupiedUsername = signServiceFacade.isOccupiedUsername((String)jsonMap.get("username"));
 		HashMap<String, Boolean> ret = new HashMap<>();
 		ret.put("isOccupiedUsername", isOccupiedUsername);
 		return ret;
 	}
 	
 	@RequestMapping(value="/sign-in", method=RequestMethod.POST)
-	public GenericResponse<?> signin(@RequestBody SignInSpecification signInForm, HttpServletRequest req) {
-		Account account = signService.signin(signInForm, req.getSession());
+	public GenericResponse<?> signin(@RequestBody SignInForm signInForm, HttpServletRequest req) {
+		AccountDTO account = signServiceFacade.signin(signInForm, req.getSession());
 		if(account == null) {
 			return GenericResponse.getFail("일치하는 사용자 정보가 없습니다.");
 		}else {
-			setPrivatePropertyNull(account);
-			GenericResponse<Account> gr = new GenericResponse<Account>();
+			GenericResponse<AccountDTO> gr = new GenericResponse<AccountDTO>();
 			gr.setData(account);
 			return gr;
 		}
@@ -58,7 +57,7 @@ public class SignRestController {
 
 	@RequestMapping(value="/myAccount", method=RequestMethod.GET)
 	public Account getMyAccount(HttpServletRequest req) throws NotSignedInException {
-		SignedInValue sign = signService.getSign(req.getSession());
+		SignedInValue sign = signServiceFacade.getSign(req.getSession());
 		Account mine = sign.getAccount();
 
 		return mine;
@@ -71,9 +70,4 @@ public class SignRestController {
 		return res;
 	}
 	
-	private void setPrivatePropertyNull(Account account) {
-		if(account == null)
-			return;
-	}
-
 }

@@ -1,26 +1,28 @@
 package com.ironshutter.web.domain.model.account;
 
-public class SignUpSpecification {
+import com.ironshutter.web.domain.shared.AbstractSpecification;
+import com.ironshutter.web.domain.shared.ValueObject;
+import com.ironshutter.web.interfaces.sign.dto.SignUpForm;
+
+public class SignUpSpecification extends AbstractSpecification<SignUpForm> implements ValueObject<SignUpSpecification> {
+	
 	private String username;
 	private String password;
 	private String email;
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	
+	public SignUpSpecification(String username, String password, String email) {
+		
+	}
+
+	@Override
+	public boolean sameValueAs(final SignUpSpecification other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isSatisfiedBy(final SignUpForm t) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

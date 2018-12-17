@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import com.ironshutter.web.interfaces.sign.dto.SignUpForm;
+
 
 @Entity
 @Table(name="accounts")
@@ -36,8 +38,5 @@ public class Account implements Serializable{
 	private Sign sign;
 
 	public Account() {}
-	public Account(SignUpSpecification signUpForm) {
-		
-	}
 
 }
