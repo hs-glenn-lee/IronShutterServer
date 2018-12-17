@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ironshutter.web.domain.model.account.Account;
-import com.ironshutter.web.infrastructure.persistence.springDataJpa.AccountRepositorySpringJpa;
+import com.ironshutter.web.domain.model.account.AccountRepository;
 import com.ironshutter.web.interfaces.shared.AppAuth;
 import com.ironshutter.web.support.UUIDUtil;
 

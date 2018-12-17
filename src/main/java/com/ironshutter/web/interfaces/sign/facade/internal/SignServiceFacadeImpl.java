@@ -1,5 +1,7 @@
 package com.ironshutter.web.interfaces.sign.facade.internal;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +9,10 @@ import org.springframework.stereotype.Component;
 
 import com.ironshutter.web.application.AccountService;
 import com.ironshutter.web.domain.model.account.Account;
-import com.ironshutter.web.infrastructure.httpSession.SignedInValue;
-import com.ironshutter.web.interfaces.sign.dto.AccountDTO;
-import com.ironshutter.web.interfaces.sign.dto.SignInForm;
-import com.ironshutter.web.interfaces.sign.dto.SignUpForm;
 import com.ironshutter.web.interfaces.sign.facade.SignServiceFacade;
+import com.ironshutter.web.interfaces.sign.facade.dto.AccountDTO;
+import com.ironshutter.web.interfaces.sign.facade.dto.SignInForm;
+import com.ironshutter.web.interfaces.sign.facade.dto.SignUpForm;
 
 @Component
 public class SignServiceFacadeImpl implements SignServiceFacade{
@@ -21,22 +22,26 @@ public class SignServiceFacadeImpl implements SignServiceFacade{
 	
 	@Override
 	public void signup(SignUpForm signUpForm) {
-		
-		Account newAccount = new Account();
-		
-		accountService.create(newAccount);
+		accountService.create(signUpForm.getUsername(), signUpForm.getPassword(), signUpForm.getName(), signUpForm.getEmail());
 	}
 
 	@Override
 	public boolean isOccupiedUsername(String username) {
-		// TODO Auto-generated method stub
-		return false;
+		return accountService.isOccupiedUsername(username);
 	}
 
 	@Override
-	public AccountDTO signin(SignInForm signInForm, HttpSession session) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<AccountDTO> signinAndGetAccountDTO(SignInForm signInForm, HttpSession session) {
+		Optional<Account> optAccount = accountService.find(signInForm.getUsername(), signInForm.getPassword());
+		if(optAccount.isPresent()) {
+			
+			//TODO do something with session
+			
+			AccountDTO signedInPublicAccountDTO = new AccountDTO(optAccount.get());
+			return Optional.of(signedInPublicAccountDTO);
+		}else {
+			return Optional.empty();
+		}
 	}
 
 	@Override
@@ -52,7 +57,7 @@ public class SignServiceFacadeImpl implements SignServiceFacade{
 	}
 
 	@Override
-	public SignedInValue getSign(HttpSession session) {
+	public Optional<AccountDTO> getSign(HttpSession session) {
 		// TODO Auto-generated method stub
 		return null;
 	}

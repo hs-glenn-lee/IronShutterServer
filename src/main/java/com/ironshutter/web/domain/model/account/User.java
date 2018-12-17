@@ -27,4 +27,22 @@ public class User {
     private Account account;
 	
 	public User() {}
+	public User(String name, String email) {
+		this.name = name;
+		this.email = email;
+	}
+	
+	public Long getAccountId() {
+		return accountId;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public Account getAccount() {
+		return account;
+	}
+	
 }

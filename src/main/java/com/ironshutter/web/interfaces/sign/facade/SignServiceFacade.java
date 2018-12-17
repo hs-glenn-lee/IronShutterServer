@@ -1,11 +1,13 @@
 package com.ironshutter.web.interfaces.sign.facade;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpSession;
 
 import com.ironshutter.web.infrastructure.httpSession.SignedInValue;
-import com.ironshutter.web.interfaces.sign.dto.AccountDTO;
-import com.ironshutter.web.interfaces.sign.dto.SignInForm;
-import com.ironshutter.web.interfaces.sign.dto.SignUpForm;
+import com.ironshutter.web.interfaces.sign.facade.dto.AccountDTO;
+import com.ironshutter.web.interfaces.sign.facade.dto.SignInForm;
+import com.ironshutter.web.interfaces.sign.facade.dto.SignUpForm;
 
 public interface SignServiceFacade {
 	
@@ -13,12 +15,12 @@ public interface SignServiceFacade {
 	
 	public boolean isOccupiedUsername(String username);
 	
-	public AccountDTO signin(SignInForm signInForm, HttpSession session);
+	public Optional<AccountDTO> signinAndGetAccountDTO(SignInForm signInForm, HttpSession session);
 	
 	public boolean signout(HttpSession session);
 	
 	public boolean isSignedin(HttpSession session);
 	
-	public SignedInValue getSign(HttpSession session);
+	public Optional<AccountDTO> getSign(HttpSession session);
 	
 }

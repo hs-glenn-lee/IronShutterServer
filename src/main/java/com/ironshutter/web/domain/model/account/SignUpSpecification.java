@@ -2,7 +2,7 @@ package com.ironshutter.web.domain.model.account;
 
 import com.ironshutter.web.domain.shared.AbstractSpecification;
 import com.ironshutter.web.domain.shared.ValueObject;
-import com.ironshutter.web.interfaces.sign.dto.SignUpForm;
+import com.ironshutter.web.interfaces.sign.facade.dto.SignUpForm;
 
 public class SignUpSpecification extends AbstractSpecification<SignUpForm> implements ValueObject<SignUpSpecification> {
 	

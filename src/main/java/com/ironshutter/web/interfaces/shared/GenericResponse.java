@@ -38,7 +38,7 @@ public class GenericResponse<T> {
 		this.data = data;
 	}
 	
-	public static GenericResponse<Object> getFail(String message) {
+	public static GenericResponse<Object> setFailed(String message) {
 		GenericResponse<Object> fail = new GenericResponse<Object>();
 		fail.setStatus(STATUS_FAIL);
 		fail.setMessage(message);

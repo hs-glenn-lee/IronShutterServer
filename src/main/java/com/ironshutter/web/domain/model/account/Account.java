@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
-import com.ironshutter.web.interfaces.sign.dto.SignUpForm;
+import com.ironshutter.web.interfaces.sign.facade.dto.SignUpForm;
 
 
 @Entity
@@ -27,9 +27,9 @@ public class Account implements Serializable{
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="is_valid")
+	@Column(name="is_retired")
 	@Type(type="org.hibernate.type.NumericBooleanType")
-	private Boolean isValid = false;
+	private Boolean isRetired = false;
 	
 	@OneToOne(mappedBy="account", fetch = FetchType.LAZY)
 	private User user;
@@ -38,5 +38,25 @@ public class Account implements Serializable{
 	private Sign sign;
 
 	public Account() {}
-
+	public Account(Sign sign, User user) {
+		this.sign = sign;
+		this.user = user;
+	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public Long getId() {
+		return id;
+	}
+	public Boolean getIsRetired() {
+		return isRetired;
+	}
+	public User getUser() {
+		return user;
+	}
+	public Sign getSign() {
+		return sign;
+	}
+	
 }

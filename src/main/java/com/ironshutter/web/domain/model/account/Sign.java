@@ -26,4 +26,23 @@ public class Sign {
     @JoinColumn(name = "account_id")
 	private Account account;
 	
+	public Sign() {}
+	public Sign(String username, String hashedPassword) {
+		this.username = username;
+		this.hashedPassword = hashedPassword;
+	}
+	
+	public Long getAccountId() {
+		return accountId;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public String getHashedPassword() {
+		return hashedPassword;
+	}
+	public Account getAccount() {
+		return account;
+	}
+	
 }

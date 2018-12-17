@@ -1,4 +1,4 @@
-package com.ironshutter.web.support;
+package com.ironshutter.web.application.support;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

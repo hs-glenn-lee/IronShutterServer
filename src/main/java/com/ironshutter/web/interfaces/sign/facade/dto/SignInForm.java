@@ -1,4 +1,4 @@
-package com.ironshutter.web.interfaces.sign.dto;
+package com.ironshutter.web.interfaces.sign.facade.dto;
 
 public class SignInForm {
 	private String username;
