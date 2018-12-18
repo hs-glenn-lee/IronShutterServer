@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
-import com.ironshutter.web.infrastructure.httpSession.SignedInValue;
 import com.ironshutter.web.interfaces.sign.facade.dto.AccountDTO;
 import com.ironshutter.web.interfaces.sign.facade.dto.SignInForm;
 import com.ironshutter.web.interfaces.sign.facade.dto.SignUpForm;
+import com.ironshutter.web.interfaces.sign.facade.internal.support.SignedInValue;
 
 public interface SignServiceFacade {
 	
@@ -21,6 +21,6 @@ public interface SignServiceFacade {
 	
 	public boolean isSignedin(HttpSession session);
 	
-	public Optional<AccountDTO> getSign(HttpSession session);
+	public Optional<SignedInValue> getSignedInValue(HttpSession session);
 	
 }

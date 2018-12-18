@@ -2,6 +2,7 @@ package com.ironshutter.web.interfaces.sign.web;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,13 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ironshutter.web.domain.model.account.Account;
-import com.ironshutter.web.infrastructure.httpSession.SignedInValue;
 import com.ironshutter.web.interfaces.exceptions.NotSignedInException;
 import com.ironshutter.web.interfaces.shared.GenericResponse;
 import com.ironshutter.web.interfaces.sign.facade.SignServiceFacade;
 import com.ironshutter.web.interfaces.sign.facade.dto.AccountDTO;
 import com.ironshutter.web.interfaces.sign.facade.dto.SignInForm;
 import com.ironshutter.web.interfaces.sign.facade.dto.SignUpForm;
+import com.ironshutter.web.interfaces.sign.facade.internal.support.SignedInValue;
 
 @RestController
 @RequestMapping(value="/api", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -45,21 +46,23 @@ public class SignRestController {
 	
 	@RequestMapping(value="/sign-in", method=RequestMethod.POST)
 	public GenericResponse<?> signin(@RequestBody SignInForm signInForm, HttpServletRequest req) {
-		AccountDTO publicAccountDTO = signServiceFacade.signin(signInForm, req.getSession());
-		if(publicAccountDTO == null) {
-			return GenericResponse.setFailed("일치하는 사용자 정보가 없습니다.");
+		Optional<AccountDTO> optAccountDTO = signServiceFacade.signinAndGetAccountDTO(signInForm, req.getSession());
+		if(optAccountDTO.isPresent()) {
+			return new GenericResponse<AccountDTO>(optAccountDTO.get());
 		}else {
-			GenericResponse<AccountDTO> gr = new GenericResponse<AccountDTO>();
-			gr.setData(publicAccountDTO);
-			return gr;
+			return GenericResponse.getFailInstance("일치하는 사용자 정보가 없습니다.");
 		}
 	}
 
 	@RequestMapping(value="/myAccount", method=RequestMethod.GET)
-	public AccountDTO getMyAccount(HttpServletRequest req) throws NotSignedInException {
-		AccountDTO myPublicAccountDTO = signServiceFacade.getSign(req.getSession());
-
-		return myPublicAccountDTO;
+	public GenericResponse<?> getAccountDTO(HttpServletRequest req) throws NotSignedInException {
+		Optional<SignedInValue> optSignedInValue = signServiceFacade.getSignedInValue(req.getSession());
+		
+		if(optSignedInValue.isPresent()) {
+			return new GenericResponse<AccountDTO>(optSignedInValue.get().getAccountDTO());
+		}else {
+			return GenericResponse.getFailInstance("로그인이 필요합니다.");
+		}
 	}
 	
 	@RequestMapping(value="/sign-out", method=RequestMethod.POST)

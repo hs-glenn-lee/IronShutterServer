@@ -38,10 +38,10 @@ public class GenericResponse<T> {
 		this.data = data;
 	}
 	
-	public static GenericResponse<Object> setFailed(String message) {
+	public static GenericResponse<Object> getFailInstance(String failMessage) {
 		GenericResponse<Object> fail = new GenericResponse<Object>();
 		fail.setStatus(STATUS_FAIL);
-		fail.setMessage(message);
+		fail.setMessage(failMessage);
 		return fail;
 	}
 

@@ -45,4 +45,9 @@ public class AccountServiceImpl implements AccountService{
 		return sign.isPresent();
 	}
 
+	@Override
+	public Optional<Account> findById(Long id) {
+		return accountRepository.findById(id);
+	}
+
 }

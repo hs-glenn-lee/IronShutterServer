@@ -13,12 +13,17 @@ import com.ironshutter.web.interfaces.sign.facade.SignServiceFacade;
 import com.ironshutter.web.interfaces.sign.facade.dto.AccountDTO;
 import com.ironshutter.web.interfaces.sign.facade.dto.SignInForm;
 import com.ironshutter.web.interfaces.sign.facade.dto.SignUpForm;
+import com.ironshutter.web.interfaces.sign.facade.internal.support.SignSessionHelper;
+import com.ironshutter.web.interfaces.sign.facade.internal.support.SignedInValue;
 
 @Component
 public class SignServiceFacadeImpl implements SignServiceFacade{
 
 	@Autowired
 	AccountService accountService;
+	
+	@Autowired
+	SignSessionHelper signSessionHelper;
 	
 	@Override
 	public void signup(SignUpForm signUpForm) {
@@ -34,11 +39,13 @@ public class SignServiceFacadeImpl implements SignServiceFacade{
 	public Optional<AccountDTO> signinAndGetAccountDTO(SignInForm signInForm, HttpSession session) {
 		Optional<Account> optAccount = accountService.find(signInForm.getUsername(), signInForm.getPassword());
 		if(optAccount.isPresent()) {
+			Account account = optAccount.get();
+			AccountDTO accountDTO = new AccountDTO(account); 
 			
-			//TODO do something with session
+			SignedInValue sessionValue = new SignedInValue(account.getId(), accountDTO);
+			signSessionHelper.put(sessionValue, session);
 			
-			AccountDTO signedInPublicAccountDTO = new AccountDTO(optAccount.get());
-			return Optional.of(signedInPublicAccountDTO);
+			return Optional.of(accountDTO);
 		}else {
 			return Optional.empty();
 		}
@@ -46,20 +53,21 @@ public class SignServiceFacadeImpl implements SignServiceFacade{
 
 	@Override
 	public boolean signout(HttpSession session) {
-		// TODO Auto-generated method stub
+		session.invalidate();
 		return false;
 	}
 
 	@Override
 	public boolean isSignedin(HttpSession session) {
-		// TODO Auto-generated method stub
+		if(signSessionHelper.get(session) == null) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
-	public Optional<AccountDTO> getSign(HttpSession session) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<SignedInValue> getSignedInValue(HttpSession session) {
+		return signSessionHelper.get(session);
 	}
 
 }
