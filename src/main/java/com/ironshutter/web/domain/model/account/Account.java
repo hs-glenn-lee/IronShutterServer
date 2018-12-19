@@ -25,35 +25,34 @@ public class Account implements Serializable{
 	private static final long serialVersionUID = -4163953969858437768L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private Long id;
+	private String id;
 	
 	@Column(name="is_retired")
 	@Type(type="org.hibernate.type.NumericBooleanType")
 	private Boolean isRetired = false;
 	
-	
-	@OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+	@OneToOne(mappedBy="account", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private User user;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
+	@OneToOne(mappedBy="account", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private Sign sign;
-
+	
 	public Account() {}
-	public Account(Sign sign, User user) {
-		this.sign = sign;
-		this.user = user;
+	public Account(String id) {
+		this.id = id;
 	}
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public Boolean getIsRetired() {
 		return isRetired;
 	}
@@ -62,6 +61,42 @@ public class Account implements Serializable{
 	}
 	public Sign getSign() {
 		return sign;
+	}
+	
+	public void setSign(Sign sign) {
+		if(this.sign != null) {
+			this.sign.setAccount(null);
+		}
+		
+		this.sign = sign;
+		if(sign == null)
+			return;
+		
+		if(sign.getAccount() != this) {
+			sign.setAccount(this);
+		}
+
+	}
+	
+	/*
+	public void setUser(User user) {
+		if(this.user != null) {
+			this.user.setAccount(null);
+		}
+		
+		this.user = user;
+		
+		if(user == null)
+			return;
+		
+		if(user.getAccount() != this) {
+			user.setAccount(this);
+		}
+		
+	}
+	*/
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

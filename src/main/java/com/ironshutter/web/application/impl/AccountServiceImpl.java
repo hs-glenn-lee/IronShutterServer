@@ -13,6 +13,7 @@ import com.ironshutter.web.domain.model.account.AccountRepository;
 import com.ironshutter.web.domain.model.account.Sign;
 import com.ironshutter.web.domain.model.account.SignRepository;
 import com.ironshutter.web.domain.model.account.User;
+import com.ironshutter.web.support.UUIDUtil;
 
 @Service("accountService")
 public class AccountServiceImpl implements AccountService{
@@ -22,15 +23,23 @@ public class AccountServiceImpl implements AccountService{
 	
 	@Autowired
 	SignRepository signRepository;
-
+	
 	@Override
-	@Transactional
 	public Account create(String username, String plainPassword, String name, String email) {
-		Sign sign = new Sign(username, SHA256Encryptor.encrypt(plainPassword));
-		User user = new User(name, email);
-		Account newAccount = new Account(sign, user);
+		String accountId = UUIDUtil.newUUID();
+		Sign sign = new Sign(accountId, username, SHA256Encryptor.encrypt(plainPassword));
+		User user = new User(accountId, name, email);
+		Account newAccount = new Account(accountId);
+		newAccount.setSign(sign);
+		newAccount.setUser(user);
 		//TODO validate entities
+		
+		System.out.println(sign.getAccount().getId());
+		System.out.println(newAccount.getId());
+		
+		//persisting
 		accountRepository.save(newAccount);
+
 		return newAccount;
 	}
 
@@ -46,7 +55,7 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public Optional<Account> findById(Long id) {
+	public Optional<Account> findById(String id) {
 		return accountRepository.findById(id);
 	}
 

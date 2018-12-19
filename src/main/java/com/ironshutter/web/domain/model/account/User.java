@@ -3,7 +3,6 @@ package com.ironshutter.web.domain.model.account;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -16,7 +15,7 @@ public class User {
 	
 	@Id
 	@Column(name="account_id")
-	private Long accountId;
+	private String accountId;
 	
 	@Column(name="name")
 	private String name;
@@ -24,18 +23,18 @@ public class User {
 	@Column(name="email")
 	private String email;
 	
-	@MapsId
-	@OneToOne(mappedBy="user", fetch = FetchType.LAZY)
-	@JoinColumn(name="account_id")
+	@OneToOne(optional=true)
+	@JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 	
 	public User() {}
-	public User(String name, String email) {
+	public User(String accountId, String name, String email) {
+		this.accountId = accountId;
 		this.name = name;
 		this.email = email;
 	}
 	
-	public Long getAccountId() {
+	public String getAccountId() {
 		return accountId;
 	}
 	public String getName() {
@@ -48,4 +47,24 @@ public class User {
 		return account;
 	}
 	
+	
+	public void setAccount(Account account) {
+		if(this.account != null) {
+			this.account.setUser(null);
+		}
+		
+		this.account = account;
+		if(account == null)
+			return;
+
+		if(account.getUser() != this ) {
+			account.setUser(this);
+		}
+
+	}
+	
+	
+/*	public void setAccount(Account account) {
+		this.account = account;
+	}*/
 }

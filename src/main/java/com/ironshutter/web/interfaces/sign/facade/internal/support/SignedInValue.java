@@ -9,23 +9,23 @@ public class SignedInValue implements Serializable{
 	
 	private static final long serialVersionUID = 6776507590445171404L;
 	
-	private Long id;
+	private String id;
 	
 	private AccountDTO accountDTO;
 	
 	private LocalDateTime signedInDate;
 
-	public SignedInValue(Long id, AccountDTO accountDTO) {
+	public SignedInValue(String id, AccountDTO accountDTO) {
 		this.id = id;
 		this.accountDTO = accountDTO;
 		this.setSignedInDate(LocalDateTime.now());
 	}
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
