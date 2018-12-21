@@ -1,9 +1,13 @@
 package com.ironshutter.web.interfaces.sign.facade.dto;
 
+import java.io.Serializable;
+
 import com.ironshutter.web.domain.model.account.Account;
 
-public class AccountDTO {
+public class AccountDTO implements Serializable{
 
+	private static final long serialVersionUID = 1537614516320838854L;
+	
 	private String username;
 	private String name;
 	private String email;

@@ -34,10 +34,6 @@ public class AccountServiceImpl implements AccountService{
 		newAccount.setUser(user);
 		//TODO validate entities
 		
-		System.out.println(sign.getAccount().getId());
-		System.out.println(newAccount.getId());
-		
-		//persisting
 		accountRepository.save(newAccount);
 
 		return newAccount;
@@ -57,6 +53,12 @@ public class AccountServiceImpl implements AccountService{
 	@Override
 	public Optional<Account> findById(String id) {
 		return accountRepository.findById(id);
+	}
+
+	@Override
+	public Account updatePassword(String oldPassword, String newPassword) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
