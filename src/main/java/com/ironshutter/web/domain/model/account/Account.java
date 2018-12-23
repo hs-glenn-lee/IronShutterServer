@@ -1,21 +1,21 @@
 package com.ironshutter.web.domain.model.account;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+
+import com.ironshutter.web.domain.model.customerRequest.CustomerRequest;
+import com.ironshutter.web.domain.model.customerRequest.CustomerRequestDetail;
 
 
 @Entity
@@ -37,6 +37,12 @@ public class Account implements Serializable{
 	
 	@OneToOne(mappedBy="account", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private Sign sign;
+	
+	@OneToMany(mappedBy="requester", fetch = FetchType.LAZY)
+	private Set<CustomerRequest> customerRequests;
+	
+	@OneToMany(mappedBy="writer", fetch = FetchType.LAZY)
+	private Set<CustomerRequestDetail> customerRequestDetails;
 	
 	public Account() {}
 	public Account(String id) {
@@ -78,7 +84,6 @@ public class Account implements Serializable{
 
 	}
 	
-	/*
 	public void setUser(User user) {
 		if(this.user != null) {
 			this.user.setAccount(null);
@@ -94,9 +99,5 @@ public class Account implements Serializable{
 		}
 		
 	}
-	*/
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
+
 }

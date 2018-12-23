@@ -4,9 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,10 +22,11 @@ public class CustomerRequest {
 
 	@Id
 	@Column(name="id")
-	private Long id;
+	private String id;
 
 	@Column(name="state")
-	private Integer state;
+	@Enumerated(EnumType.STRING)
+	private CustomerRequestState customerRequestState;
 	
 	@Column(name="requested_at")
 	@Temporal(TemporalType.TIMESTAMP)

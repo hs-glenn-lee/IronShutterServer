@@ -23,11 +23,19 @@ import com.ironshutter.web.domain.model.account.Account;
 public class CustomerRequestDetail {
 
 	@Id
-	@Column(name="request_id")
-	private Long requestId;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="request_id")
+	private CustomerRequest customerRequest;
 	
 	@Column(name="sequence")
 	private Integer sequence;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="writer_id")
+	private Account writer;
 
 	@Column(name="content")
 	private String content;
@@ -43,9 +51,5 @@ public class CustomerRequestDetail {
 	@Column(name="is_deleted")
 	@Type(type="org.hibernate.type.NumericBooleanType")
 	private Boolean isDeleted = false;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="writer_id")
-	private Account requester;
-	
+
 }
