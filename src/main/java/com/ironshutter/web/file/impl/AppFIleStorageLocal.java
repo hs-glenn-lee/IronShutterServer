@@ -12,10 +12,10 @@ import org.springframework.util.FileCopyUtils;
 import com.ironshutter.web.file.AppFile;
 import com.ironshutter.web.file.AppFileContext;
 import com.ironshutter.web.file.AppFileKey;
-import com.ironshutter.web.file.AppFileStorageService;
+import com.ironshutter.web.file.AppFileStorage;
 
 @Component
-public class AppFIleStorageServiceLocal implements AppFileStorageService{
+public class AppFIleStorageLocal implements AppFileStorage{
 
 	@Override
 	public AppFile store(InputStream in, AppFileContext appFileContext) throws IOException {
@@ -34,12 +34,12 @@ public class AppFIleStorageServiceLocal implements AppFileStorageService{
 
 	@Override
 	public AppFile get(AppFileKey key) {
-		return new AppFileLocal(new File(key.toString()));
+		return new AppFileLocal(new File(key.get()));
 	}
 
 	@Override
 	public boolean remove(AppFileKey key) {
-		return new File(key.toString()).delete();
+		return new File(key.get()).delete();
 	}
 
 }
