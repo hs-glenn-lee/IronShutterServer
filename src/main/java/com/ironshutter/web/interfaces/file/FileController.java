@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class FileController {
 	
-	@RequestMapping(value="/download/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/download-file/{key}", method = RequestMethod.GET)
 	public void download(@PathVariable("id")String id, HttpServletResponse response) throws IOException {
 		InputStream in = null;
 
@@ -64,7 +64,7 @@ public class FileController {
 
 	}
 	
-	@PostMapping("/upload")
+	@PostMapping("/upload-file")
 	public String singleFileUpload(@RequestParam("file") MultipartFile file, Model model)
 	     throws IOException {
 	

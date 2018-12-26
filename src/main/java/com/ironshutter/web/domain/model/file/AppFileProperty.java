@@ -6,4 +6,5 @@ public class AppFileProperty {
 	String originFilename;
 	String type;
 	String length;
+	Integer permissionCode;
 }
