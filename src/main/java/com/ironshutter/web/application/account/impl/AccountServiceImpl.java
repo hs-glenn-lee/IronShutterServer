@@ -1,4 +1,4 @@
-package com.ironshutter.web.application.impl;
+package com.ironshutter.web.application.account.impl;
 
 import java.util.Optional;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ironshutter.web.application.AccountService;
+import com.ironshutter.web.application.account.AccountService;
 import com.ironshutter.web.application.support.SHA256Encryptor;
 import com.ironshutter.web.domain.model.account.Account;
 import com.ironshutter.web.domain.model.account.AccountRepository;

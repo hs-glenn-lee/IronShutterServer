@@ -29,8 +29,8 @@ public class AppFilePermission {
 	 * */
 	private static final Integer CLIENT_APPPLICATION_FILE_PERMISSION = 1;
 	
-	public static Integer getClientApplicationFilePermission () {
-		return CLIENT_APPPLICATION_FILE_PERMISSION;
+	public static AppFilePermission getClientApplicationFilePermission () {
+		return new AppFilePermission(CLIENT_APPPLICATION_FILE_PERMISSION);
 	}
 	
 	Integer permissionCode;
@@ -41,7 +41,5 @@ public class AppFilePermission {
 	public AppFilePermission(Integer permissionCode) {
 		this.permissionCode = permissionCode;
 	}
-	
-	
 	
 }

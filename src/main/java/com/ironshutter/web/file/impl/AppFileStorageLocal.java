@@ -15,10 +15,10 @@ import com.ironshutter.web.file.AppFileKey;
 import com.ironshutter.web.file.AppFileStorage;
 
 @Component
-public class AppFIleStorageLocal implements AppFileStorage{
+public class AppFileStorageLocal implements AppFileStorage{
 
 	@Override
-	public AppFile store(InputStream in, AppFileContext appFileContext) throws IOException {
+	public AppFileKey store(InputStream in, AppFileContext appFileContext) throws IOException {
 		if(!(appFileContext instanceof AppFileContextLocal)) {
 			throw new IllegalArgumentException("appFileContext must be instance of AppFileContextLocal ");
 		}
@@ -29,7 +29,7 @@ public class AppFIleStorageLocal implements AppFileStorage{
 		
 		FileCopyUtils.copy(in, outputStream);
 		
-		return new AppFileLocal(target);
+		return appFileContext.getAppFileKey();
 	}
 
 	@Override

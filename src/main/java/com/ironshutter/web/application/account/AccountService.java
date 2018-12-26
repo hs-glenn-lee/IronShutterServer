@@ -1,4 +1,4 @@
-package com.ironshutter.web.application;
+package com.ironshutter.web.application.account;
 
 import java.util.Optional;
 

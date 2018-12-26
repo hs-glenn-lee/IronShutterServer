@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ironshutter.web.application.AccountService;
+import com.ironshutter.web.application.account.AccountService;
 import com.ironshutter.web.domain.model.account.Account;
 import com.ironshutter.web.interfaces.sign.facade.SignServiceFacade;
 import com.ironshutter.web.interfaces.sign.facade.dto.AccountDTO;
