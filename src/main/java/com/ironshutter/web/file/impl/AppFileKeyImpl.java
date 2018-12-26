@@ -11,7 +11,7 @@ public class AppFileKeyImpl extends AppFileKey{
 	}
 
 	@Override
-	public String get() {
+	public String getAsString() {
 		return this.k;
 	}
 	

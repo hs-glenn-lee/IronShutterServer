@@ -1,6 +1,6 @@
 package com.ironshutter.web.domain.model.file;
 
-public class StoredFile {
+public class AppFileProperty {
 	String id;
 	String key;
 	String originFilename;

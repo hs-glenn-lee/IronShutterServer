@@ -34,12 +34,12 @@ public class AppFIleStorageLocal implements AppFileStorage{
 
 	@Override
 	public AppFile get(AppFileKey key) {
-		return new AppFileLocal(new File(key.get()));
+		return new AppFileLocal(new File(key.getAsString()));
 	}
 
 	@Override
 	public boolean remove(AppFileKey key) {
-		return new File(key.get()).delete();
+		return new File(key.getAsString()).delete();
 	}
 
 }
