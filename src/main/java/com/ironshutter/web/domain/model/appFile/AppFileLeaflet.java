@@ -1,11 +1,11 @@
-package com.ironshutter.web.domain.model.file;
+package com.ironshutter.web.domain.model.appFile;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.ironshutter.web.file.AppFileKey;
+import com.ironshutter.web.file.FileKey;
 
 @Entity
 @Table(name="app_file_leaflet")
@@ -25,7 +25,7 @@ public class AppFileLeaflet {
 	
 	
 	public AppFileLeaflet() {}
-	public AppFileLeaflet(String id, AppFileKey appFileKey, String originFilename, Long length) {
+	public AppFileLeaflet(String id, FileKey appFileKey, String originFilename, Long length) {
 		this.id = id;
 		this.key = appFileKey.getAsString();
 		this.originFilename = originFilename;

@@ -5,10 +5,10 @@ import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ironshutter.web.domain.model.file.AppFileLeaflet;
-import com.ironshutter.web.file.AppFile;
+import com.ironshutter.web.domain.model.appFile.AppFile;
+import com.ironshutter.web.domain.model.appFile.AppFileLeaflet;
 
 public interface AppFileService {
-	public AppFileLeaflet store(MultipartFile file) throws IOException;
+	public AppFile store(MultipartFile file) throws IOException;
 	public Optional<AppFile> getAppFile(String id);
 }

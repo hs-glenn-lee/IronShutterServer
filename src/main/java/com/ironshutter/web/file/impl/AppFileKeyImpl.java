@@ -1,8 +1,8 @@
 package com.ironshutter.web.file.impl;
 
-import com.ironshutter.web.file.AppFileKey;
+import com.ironshutter.web.file.FileKey;
 
-public class AppFileKeyImpl extends AppFileKey{
+public class AppFileKeyImpl extends FileKey{
 	
 	String k;
 	

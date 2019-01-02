@@ -1,4 +1,4 @@
-package com.ironshutter.web.domain.model.file;
+package com.ironshutter.web.domain.model.appFile;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

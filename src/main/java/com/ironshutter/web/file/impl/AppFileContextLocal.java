@@ -8,11 +8,11 @@ import java.util.Date;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.ironshutter.web.file.AppFileContext;
-import com.ironshutter.web.file.AppFileKey;
+import com.ironshutter.web.file.FileContext;
+import com.ironshutter.web.file.FileKey;
 import com.ironshutter.web.support.UUIDUtil;
 
-public class AppFileContextLocal implements AppFileContext{
+public class AppFileContextLocal implements FileContext{
 	
 	private LocalDate now;
 	private String appFileName;
@@ -24,18 +24,17 @@ public class AppFileContextLocal implements AppFileContext{
 	
 	public AppFileContextLocal(String appFileId, String originFilename) {
 		now = LocalDate.now();
-		this.appFileName = appFileId;
-		this.appFileName = this.appFileName + "." + FilenameUtils.getExtension(originFilename);
+		this.appFileName = appFileId + "." + FilenameUtils.getExtension(originFilename);
 	}
 	
 	@Override
-	public AppFileKey getAppFileKey() {
+	public FileKey getAppFileKey() {
 		String keyStr = STORAGE_ROOT + SPRTR +
 						now.getYear() + SPRTR +
 						now.getMonthValue() + SPRTR +
 						now.getDayOfMonth() + SPRTR +
 						appFileName;
-		AppFileKey appFileKey = new AppFileKeyImpl(keyStr);
+		FileKey appFileKey = new AppFileKeyImpl(keyStr);
 		return appFileKey;
 	}
 	

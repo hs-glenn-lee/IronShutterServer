@@ -1,5 +1,6 @@
 package com.ironshutter.web.application.appFile.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -7,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ironshutter.web.application.appFile.AppFileService;
-import com.ironshutter.web.domain.model.file.AppFileLeaflet;
-import com.ironshutter.web.domain.model.file.AppFileLeafletRepository;
-import com.ironshutter.web.file.AppFile;
-import com.ironshutter.web.file.AppFileContext;
-import com.ironshutter.web.file.AppFileKey;
-import com.ironshutter.web.file.AppFileStorage;
+import com.ironshutter.web.domain.model.appFile.AppFile;
+import com.ironshutter.web.domain.model.appFile.AppFileLeaflet;
+import com.ironshutter.web.domain.model.appFile.AppFileLeafletRepository;
+import com.ironshutter.web.file.FileContext;
+import com.ironshutter.web.file.FileKey;
+import com.ironshutter.web.file.FileStorage;
 import com.ironshutter.web.file.impl.AppFileContextLocal;
 import com.ironshutter.web.file.impl.AppFileKeyImpl;
 import com.ironshutter.web.support.UUIDUtil;
@@ -20,31 +21,36 @@ import com.ironshutter.web.support.UUIDUtil;
 public class AppFileServiceImpl implements AppFileService{
 	
 	@Autowired
-	AppFileStorage appFileStorage;
+	FileStorage appFileStorage;
 	
 	@Autowired
 	AppFileLeafletRepository appFileLeafletRepository;
 
 	@Override
-	public AppFileLeaflet store(MultipartFile file) throws IOException {
+	public AppFile store(MultipartFile file) throws IOException {
 		String appFileLeafletId = UUIDUtil.newUUID();
-		AppFileContext appFileContext = new AppFileContextLocal(file.getOriginalFilename(), appFileLeafletId);
+		FileContext appFileContext = new AppFileContextLocal(file.getOriginalFilename(), appFileLeafletId);
 		
-		AppFileKey appFileKey = appFileStorage.store(file.getInputStream(), appFileContext);
+		FileKey appFileKey = appFileStorage.store(file.getInputStream(), appFileContext);
 
 		AppFileLeaflet appFileLeaflet = new AppFileLeaflet(appFileLeafletId, appFileKey, file.getOriginalFilename(), file.getSize());
 		appFileLeafletRepository.save(appFileLeaflet);
-		return appFileLeaflet;
+		
+		AppFile appFile = new AppFile(appFileLeaflet, appFileStorage.get(appFileKey));
+		return appFile;
 	}
 
 	@Override
 	public Optional<AppFile> getAppFile(String id) {
 		Optional<AppFileLeaflet> appFileLeaflet = appFileLeafletRepository.findById(id);
-		if(!appFileLeaflet.isPresent()) {
+		if(!appFileLeaflet.isPresent())
 			return Optional.empty();
-		}
 		
-		AppFile appFile = appFileStorage.get(new AppFileKeyImpl(appFileLeaflet.get().getKey()));
+		File file = appFileStorage.get(new AppFileKeyImpl(appFileLeaflet.get().getKey()));
+		if(!file.exists())
+			return Optional.empty();
+		
+		AppFile appFile = new AppFile(appFileLeaflet.get(), file);
 		return Optional.of(appFile);
 	}
 

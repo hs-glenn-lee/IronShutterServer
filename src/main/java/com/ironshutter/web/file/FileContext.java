@@ -1,7 +1,7 @@
 package com.ironshutter.web.file;
 
-public interface AppFileContext {
-	public AppFileKey getAppFileKey();
+public interface FileContext {
+	public FileKey getAppFileKey();
 	public String getAppFileName();
 	public String getAppFileId();
 }

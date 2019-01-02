@@ -9,16 +9,15 @@ import java.io.InputStream;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
-import com.ironshutter.web.file.AppFile;
-import com.ironshutter.web.file.AppFileContext;
-import com.ironshutter.web.file.AppFileKey;
-import com.ironshutter.web.file.AppFileStorage;
+import com.ironshutter.web.file.FileContext;
+import com.ironshutter.web.file.FileKey;
+import com.ironshutter.web.file.FileStorage;
 
 @Component
-public class AppFileStorageLocal implements AppFileStorage{
+public class AppFileStorageLocal implements FileStorage{
 
 	@Override
-	public AppFileKey store(InputStream in, AppFileContext appFileContext) throws IOException {
+	public FileKey store(InputStream in, FileContext appFileContext) throws IOException {
 		if(!(appFileContext instanceof AppFileContextLocal)) {
 			throw new IllegalArgumentException("appFileContext must be instance of AppFileContextLocal ");
 		}
@@ -26,7 +25,7 @@ public class AppFileStorageLocal implements AppFileStorage{
 		File targetFile = new File(appFileContext.getAppFileKey().toString());
 		File targetDir = targetFile.getParentFile();
 		
-		targetDir.mkdirs();
+		targetDir.mkdirs(); // TODO need a map cache
 		
 		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(targetFile));
 		
@@ -36,12 +35,12 @@ public class AppFileStorageLocal implements AppFileStorage{
 	}
 
 	@Override
-	public AppFile get(AppFileKey key) {
-		return new AppFileLocal(new File(key.getAsString()));
+	public File get(FileKey key) {
+		return new File(key.getAsString());
 	}
 
 	@Override
-	public boolean remove(AppFileKey key) {
+	public boolean remove(FileKey key) {
 		return new File(key.getAsString()).delete();
 	}
 
