@@ -23,9 +23,12 @@ public class AppFileStorageLocal implements AppFileStorage{
 			throw new IllegalArgumentException("appFileContext must be instance of AppFileContextLocal ");
 		}
 		
-		// TODO check avail to write: 폴더가 있는지 등 ..
-		File target = new File(appFileContext.getAppFileKey().toString());
-		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(target));
+		File targetFile = new File(appFileContext.getAppFileKey().toString());
+		File targetDir = targetFile.getParentFile();
+		
+		targetDir.mkdirs();
+		
+		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(targetFile));
 		
 		FileCopyUtils.copy(in, outputStream);
 		

@@ -11,9 +11,9 @@ class AppFileLocal extends AppFile{
 	AppFileLocal(File file) {
 		this.file = file;
 	}
+	
 	@Override
 	public File getFile() {
 		return this.file;
 	}
-
 }

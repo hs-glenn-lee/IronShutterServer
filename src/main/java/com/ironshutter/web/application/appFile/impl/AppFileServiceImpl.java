@@ -27,18 +27,18 @@ public class AppFileServiceImpl implements AppFileService{
 
 	@Override
 	public AppFileLeaflet store(MultipartFile file) throws IOException {
-		AppFileContext appFileContext = new AppFileContextLocal();
-		String appFileId = UUIDUtil.newUUID();
-
-		AppFileKey appFileKey = appFileStorage.store(file.getInputStream(), appFileContext);
-		AppFileLeaflet appFileLeaflet = new AppFileLeaflet(appFileId, appFileKey, file.getOriginalFilename(), file.getSize());
+		String appFileLeafletId = UUIDUtil.newUUID();
+		AppFileContext appFileContext = new AppFileContextLocal(file.getOriginalFilename(), appFileLeafletId);
 		
+		AppFileKey appFileKey = appFileStorage.store(file.getInputStream(), appFileContext);
+
+		AppFileLeaflet appFileLeaflet = new AppFileLeaflet(appFileLeafletId, appFileKey, file.getOriginalFilename(), file.getSize());
 		appFileLeafletRepository.save(appFileLeaflet);
 		return appFileLeaflet;
 	}
 
 	@Override
-	public Optional<AppFile> get(String id) {
+	public Optional<AppFile> getAppFile(String id) {
 		Optional<AppFileLeaflet> appFileLeaflet = appFileLeafletRepository.findById(id);
 		if(!appFileLeaflet.isPresent()) {
 			return Optional.empty();

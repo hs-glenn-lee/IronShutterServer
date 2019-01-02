@@ -10,5 +10,5 @@ import com.ironshutter.web.file.AppFile;
 
 public interface AppFileService {
 	public AppFileLeaflet store(MultipartFile file) throws IOException;
-	public Optional<AppFile> get(String id);
+	public Optional<AppFile> getAppFile(String id);
 }
