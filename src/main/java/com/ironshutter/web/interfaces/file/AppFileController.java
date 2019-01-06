@@ -8,18 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ironshutter.web.interfaces.exceptions.NotSignedInException;
 import com.ironshutter.web.interfaces.shared.GenericResponse;
 
-@Controller
+@RestController
+@RequestMapping(value="/api")
 public class AppFileController {
 	
 	Logger logger = LoggerFactory.getLogger(AppFileController.class);
@@ -27,7 +27,7 @@ public class AppFileController {
 	@Autowired
 	AppFileServiceFacade appFileServiceFacade;
 	
-	@PostMapping("/upload-file")
+	@RequestMapping(value="/upload-file", method = RequestMethod.POST)
 	public GenericResponse<?> singleFileUpload(@RequestParam("file") MultipartFile mpFile, HttpServletRequest request){
 		AppFileLeafletDTO appFileLeaflet;
 		try {
@@ -42,7 +42,7 @@ public class AppFileController {
 	}
 	
 	@RequestMapping(value="/download-file/{key}", method = RequestMethod.GET)
-	public void download(@PathVariable("id")String id, HttpServletResponse response, HttpServletRequest request) throws IOException {
+	public void download(@PathVariable("key")String id, HttpServletResponse response, HttpServletRequest request) throws IOException {
 		appFileServiceFacade.streamOutAppFile(id, response, request.getSession());
 	}
 	

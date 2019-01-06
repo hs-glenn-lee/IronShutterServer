@@ -22,7 +22,7 @@ public class AppFileStorageLocal implements FileStorage{
 			throw new IllegalArgumentException("appFileContext must be instance of AppFileContextLocal ");
 		}
 		
-		File targetFile = new File(appFileContext.getAppFileKey().toString());
+		File targetFile = new File(appFileContext.getAppFileKey().getAsString());
 		File targetDir = targetFile.getParentFile();
 		
 		targetDir.mkdirs(); // TODO need a map cache

@@ -74,11 +74,13 @@
 		</dependency>
 		
 		<!-- for conversion jpa object to JSON(with jackson) -->
+		<!-- 
 		<dependency>
 		  <groupId>com.fasterxml.jackson.datatype</groupId>
-		  <artifactId>jackson-datatype-hibernate4</artifactId>
+		  <artifactId>jackson-datatype-hibernate5</artifactId>
 		  <version>2.9.0</version>
-		</dependency>   
+		</dependency>  
+		 --> 
 		
 		<!-- spring data -->
 		<dependency>
@@ -97,6 +99,7 @@
 		  <artifactId>commons-lang3</artifactId>
 		  <version>3.8</version>
 		</dependency>
+
 		
 	</dependencies>
 

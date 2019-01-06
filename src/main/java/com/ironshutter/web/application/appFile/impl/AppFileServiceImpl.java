@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ironshutter.web.application.appFile.AppFileService;
@@ -18,6 +20,7 @@ import com.ironshutter.web.file.impl.AppFileContextLocal;
 import com.ironshutter.web.file.impl.AppFileKeyImpl;
 import com.ironshutter.web.support.UUIDUtil;
 
+@Service("appFileService")
 public class AppFileServiceImpl implements AppFileService{
 	
 	@Autowired
@@ -29,7 +32,7 @@ public class AppFileServiceImpl implements AppFileService{
 	@Override
 	public AppFile store(MultipartFile file) throws IOException {
 		String appFileLeafletId = UUIDUtil.newUUID();
-		FileContext appFileContext = new AppFileContextLocal(file.getOriginalFilename(), appFileLeafletId);
+		FileContext appFileContext = new AppFileContextLocal(appFileLeafletId, file.getOriginalFilename());
 		
 		FileKey appFileKey = appFileStorage.store(file.getInputStream(), appFileContext);
 

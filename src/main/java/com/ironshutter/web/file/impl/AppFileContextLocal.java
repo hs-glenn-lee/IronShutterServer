@@ -25,6 +25,7 @@ public class AppFileContextLocal implements FileContext{
 	public AppFileContextLocal(String appFileId, String originFilename) {
 		now = LocalDate.now();
 		this.appFileName = appFileId + "." + FilenameUtils.getExtension(originFilename);
+		System.out.println("????"+FilenameUtils.getExtension(originFilename));
 	}
 	
 	@Override

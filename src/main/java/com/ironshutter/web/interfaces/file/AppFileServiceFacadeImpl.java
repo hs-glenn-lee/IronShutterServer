@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,7 @@ import com.ironshutter.web.interfaces.exceptions.NotSignedInException;
 import com.ironshutter.web.interfaces.sign.facade.SignServiceFacade;
 import com.ironshutter.web.interfaces.sign.facade.internal.support.SignedInValue;
 
+@Component
 public class AppFileServiceFacadeImpl implements AppFileServiceFacade{
 	
 	@Autowired

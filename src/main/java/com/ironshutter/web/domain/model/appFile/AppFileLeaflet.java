@@ -8,19 +8,19 @@ import javax.persistence.Table;
 import com.ironshutter.web.file.FileKey;
 
 @Entity
-@Table(name="app_file_leaflet")
+@Table(name="app_file_leaflets")
 public class AppFileLeaflet {
 	
 	@Id
 	private String id;
 	
-	@Column(name="key")
+	@Column(name="\"key\"")
 	private String key;
 	
 	@Column(name="origin_file_name")
 	private String originFilename;
 	
-	@Column(name="length")
+	@Column(name="\"length\"")
 	private Long length; // byte
 	
 	
@@ -44,5 +44,9 @@ public class AppFileLeaflet {
 	}
 	public Long getLength() {
 		return length;
+	}
+	
+	public String toString() {
+		return "id: " + id + ", key: " + key + ", originFilename: " + originFilename;
 	}
 }
